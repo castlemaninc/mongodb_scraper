@@ -41,6 +41,12 @@ db.once("open", function() {
 
 
 // Routes
+
+app.get("/", function(req,res){
+	res.send(index);
+});
+
+
 app.get("/scrape", function(req,res){
 
 	request('http://www.surfline.com/surf-news/', function (error, response, html) {
@@ -63,7 +69,7 @@ app.get("/scrape", function(req,res){
 	    var summary = paragraphArray[1];
 
 	    // Push the image's URL (saved to the imgLink var) into the result array
-	    result.push({ Title: title, Summary: summary, Img: imgLink, Date: date,  });
+	    result.push({ Title: title, Summary: summary, Img: imgLink, Date: date  });
 	  });
 	    
 	  console.log(result);
