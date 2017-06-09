@@ -1,20 +1,24 @@
 .wrapper {
 	background-color: CadetBlue;
+	background-image: url("skulls.png")
 }
 
 .jumbotron {
-	background-color: white;
+	background-color: rgba(255,255,255, 0.6);
+	border-bottom: 1px solid gold;	
 }
 
 .jumbotron .h1, .jumbotron h1 {
-    color: CadetBlue;
+    color: SteelBlue;
     font-family: 'Trade Winds', cursive;
+    /*text-shadow: 2px 2px lightblue;*/
 
 }
 
 .panel {
 	padding: 10px 15px;
-	background-color: lightblue;
+	background-color: rgba(255,255,255, 0.6);
+	border: 1px solid gold;	
 }
 
 img {
