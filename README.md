@@ -1,4 +1,4 @@
-#HW MongoDB Scraper
+# HW - MongoDB Scraper
 
 ## How to use the application
 In order to retrieve articles hit the 'Get Articles' button
