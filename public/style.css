@@ -1,9 +1,15 @@
 .wrapper {
-	background-color: darkblue;
+	background-color: CadetBlue;
+}
+
+.jumbotron {
+	background-color: white;
 }
 
 .jumbotron .h1, .jumbotron h1 {
-    color: darkblue;
+    color: CadetBlue;
+    font-family: 'Trade Winds', cursive;
+
 }
 
 .panel {
