@@ -48,7 +48,7 @@ app.get("/", function(req,res){
 });
 
 
-app.get("/api", function(req,res){
+app.get("/scrape", function(req,res){
 
 	request('http://www.surfline.com/surf-news/', function (error, response, html) {
 
@@ -62,13 +62,17 @@ app.get("/api", function(req,res){
 			// Save an empty result object
 			var result = {};
 
-			// Add the text and href of every link, and save them as properties of the result object
-			result.imgLink = $(this).find("a").find("img").attr("src");
+			// save data as properties of the result object			
 			result.title = $(this).find("a").text().trim();
-			result.date = $(this).find("span").text().trim();
 
 			var paragraphArray = $(this).after("span.date").text().trim().split(") ");
+			
 			result.summary = paragraphArray[1];
+
+			result.imglink = $(this).find("a").find("img").attr("src");
+			result.date = $(this).find("span").text().trim();
+
+			
 
 			// Push the image's URL (saved to the imgLink var) into the result array
 			// result.push({ Title: title, Summary: summary, Img: imgLink, Date: date  });
@@ -98,7 +102,7 @@ app.get("/api", function(req,res){
 })
 
 // This will get the articles we scraped from the mongoDB
-app.get("/articles", function(req, res) {
+app.get("/api", function(req, res) {
   // Grab every doc in the Articles array
   Article.find({}, function(error, doc) {
     // Log any errors

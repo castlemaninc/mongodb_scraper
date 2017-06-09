@@ -10,20 +10,20 @@ var ArticleSchema = new Schema({
     required: true
   },
   // summary is a required string
-  // summary: {
-  //   type: String,
-  //   required: true
-  // }
+  summary: {
+    type: String,
+    required: true
+  },
 
-  // imgLink: {
-  //   type: String,
-  //   required: false
-  // },
+  imglink: {
+    type: String,
+    required: false
+  },
 
-  // date: {
-  //   type: String,
-  //   required: true
-  // }
+  date: {
+    type: String,
+    required: true
+  }
   // This only saves one note's ObjectId, ref refers to the Note model
   // note: {
   //   type: Schema.Types.ObjectId,
