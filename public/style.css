@@ -1,0 +1,17 @@
+.wrapper {
+	background-color: darkblue;
+}
+
+.jumbotron .h1, .jumbotron h1 {
+    color: darkblue;
+}
+
+.panel {
+	padding: 10px 15px;
+	background-color: lightblue;
+}
+
+img {
+	max-width: 	80px;
+	max-height: 80px;
+}
