@@ -37,6 +37,7 @@ db.on("error", function(error) {
 // Once logged in to the db through mongoose, log a success message
 db.once("open", function() {
   console.log("Mongoose connection successful.");
+  // console.log(db);
 });
 
 
@@ -47,7 +48,7 @@ app.get("/", function(req,res){
 });
 
 
-app.get("/scrape", function(req,res){
+app.get("/api", function(req,res){
 
 	request('http://www.surfline.com/surf-news/', function (error, response, html) {
 
@@ -55,29 +56,59 @@ app.get("/scrape", function(req,res){
 	  // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
 	  var $ = cheerio.load(html);
 
-	  // An empty array to save the data that we'll scrape
-	  var result = [];
-
-	  
+	  	  
 	  $("ul#surf-feed.story-list li").each(function(i, element) {
 
-	    
-	    var imgLink = $(element).find("a").find("img").attr("src");
-	    var title = $(element).find("a").text().trim();
-	    var date = $(element).find("span").text().trim();
-	    var paragraphArray = $(element).after("span.date").text().trim().split(") ");
-	    var summary = paragraphArray[1];
+	  	// Save an empty result object
+      	var result = {};
 
-	    // Push the image's URL (saved to the imgLink var) into the result array
-	    result.push({ Title: title, Summary: summary, Img: imgLink, Date: date  });
+	    // Add the text and href of every link, and save them as properties of the result object
+	    result.imgLink = $(this).find("a").find("img").attr("src");
+	    result.title = $(this).find("a").text().trim();
+	    result.date = $(this).find("span").text().trim();
+	    
+	    var paragraphArray = $(this).after("span.date").text().trim().split(") ");
+	    result.summary = paragraphArray[1];
+
+	    // // Push the image's URL (saved to the imgLink var) into the result array
+	    // result.push({ Title: title, Summary: summary, Img: imgLink, Date: date  });
 	  });
+
+	  // Using our Article model, create a new entry
+      // This effectively passes the result object to the entry (and the title and link)
+      var entry = new Article(result);
+
+	  // Now, save that entry to the db
+      entry.save(function(err, doc) {
+        // Log any errors
+        if (err) {
+          console.log(err);
+        }
+        // Or log the doc
+        else {
+          console.log(doc);
+        }
+      });
 	    
 	  console.log(result);
 	  res.send(result);
 	});
 })
 
-
+// This will get the articles we scraped from the mongoDB
+app.get("/articles", function(req, res) {
+  // Grab every doc in the Articles array
+  Article.find({}, function(error, doc) {
+    // Log any errors
+    if (error) {
+      console.log(error);
+    }
+    // Or send the doc to the browser as a json object
+    else {
+      res.json(doc);
+    }
+  });
+});
 
 
 
