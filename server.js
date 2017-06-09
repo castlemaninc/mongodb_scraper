@@ -54,44 +54,46 @@ app.get("/api", function(req,res){
 
 		// Load the HTML into cheerio and save it to a variable
 	  // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
-	  var $ = cheerio.load(html);
+		var $ = cheerio.load(html);
 
-	  	  
-	  $("ul#surf-feed.story-list li").each(function(i, element) {
 
-	  	// Save an empty result object
-      	var result = {};
+		$("ul#surf-feed.story-list li").each(function(i, element) {
 
-	    // Add the text and href of every link, and save them as properties of the result object
-	    result.imgLink = $(this).find("a").find("img").attr("src");
-	    result.title = $(this).find("a").text().trim();
-	    result.date = $(this).find("span").text().trim();
+			// Save an empty result object
+			var result = {};
+
+			// Add the text and href of every link, and save them as properties of the result object
+			result.imgLink = $(this).find("a").find("img").attr("src");
+			result.title = $(this).find("a").text().trim();
+			result.date = $(this).find("span").text().trim();
+
+			var paragraphArray = $(this).after("span.date").text().trim().split(") ");
+			result.summary = paragraphArray[1];
+
+			// Push the image's URL (saved to the imgLink var) into the result array
+			// result.push({ Title: title, Summary: summary, Img: imgLink, Date: date  });
+
+			// Using our Article model, create a new entry
+			// This effectively passes the result object to the entry (and the title and link)
+			var entry = new Article(result);
+
+			// Now, save that entry to the db
+			entry.save(function(err, doc) {
+					// Log any errors
+					if (err) {
+					console.log(err);
+				}
+					// Or log the doc
+					else {
+					console.log(doc);
+				}
+			});
+
+			console.log(result);			
+
+		});	  
 	    
-	    var paragraphArray = $(this).after("span.date").text().trim().split(") ");
-	    result.summary = paragraphArray[1];
-
-	    // // Push the image's URL (saved to the imgLink var) into the result array
-	    // result.push({ Title: title, Summary: summary, Img: imgLink, Date: date  });
-	  });
-
-	  // Using our Article model, create a new entry
-      // This effectively passes the result object to the entry (and the title and link)
-      var entry = new Article(result);
-
-	  // Now, save that entry to the db
-      entry.save(function(err, doc) {
-        // Log any errors
-        if (err) {
-          console.log(err);
-        }
-        // Or log the doc
-        else {
-          console.log(doc);
-        }
-      });
-	    
-	  console.log(result);
-	  res.send(result);
+		
 	});
 })
 

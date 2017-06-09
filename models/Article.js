@@ -10,10 +10,10 @@ var ArticleSchema = new Schema({
     required: true
   },
   // summary is a required string
-  summary: {
-    type: String,
-    required: true
-  },
+  // summary: {
+  //   type: String,
+  //   required: true
+  // }
 
   // imgLink: {
   //   type: String,
