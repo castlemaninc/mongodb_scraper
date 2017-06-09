@@ -101,7 +101,7 @@ app.get("/scrape", function(req,res){
 	});
 })
 
-// This will get the articles we scraped from the mongoDB
+// This gets the articles scraped from the mongoDB
 app.get("/api", function(req, res) {
   // Grab every doc in the Articles array
   Article.find({}, function(error, doc) {
