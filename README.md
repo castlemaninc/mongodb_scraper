@@ -1,7 +1,9 @@
 # HW - MongoDB Scraper
 
 ## How to use the application
-In order to retrieve articles hit the 'Get Articles' button
+
+Read the latest articles related to surfing news. 
+Click 'Add Note' to add a note.
 
 ## Technologies Used
 - MongoDB
@@ -9,6 +11,6 @@ In order to retrieve articles hit the 'Get Articles' button
 - Nodejs
 - Mongoose 
 - Morgan
-- Cheerio 
-
+- Cheerio
+- AJAX
 - Bootstrap
